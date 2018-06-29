@@ -8,34 +8,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Usuario implements Serializable{
+public class Empresa implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String email;
-	private String telefone;
-	private String cpf;
+	private String cnpj;
 	
-	@ManyToMany(mappedBy="usuarios")
-	private List<Empresa> empresas = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "EMPRESA_USUARIO",
+		joinColumns = @JoinColumn(name = "empresa_id"),
+		inverseJoinColumns= @JoinColumn(name = "usuario_id")
+	)
+	private List<Usuario> usuarios = new ArrayList<>();
 	
-	public Usuario() {
+	public Empresa() {
 		
 	}
 
-	public Usuario(Integer id, String nome, String email, String telefone, String cpf) {
+	public Empresa(Integer id, String nome, String cnpj) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
-		this.cpf = cpf;
+		this.cnpj = cnpj;
 	}
 
 	public Integer getId() {
@@ -54,36 +56,20 @@ public class Usuario implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public List<Usuario> getUsuarios() {
+		return usuarios;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	
-	public List<Empresa> getEmpresas() {
-		return empresas;
-	}
-
-	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	@Override
@@ -102,7 +88,7 @@ public class Usuario implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		Empresa other = (Empresa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -110,7 +96,6 @@ public class Usuario implements Serializable{
 			return false;
 		return true;
 	}
-
 	
 	
 }
