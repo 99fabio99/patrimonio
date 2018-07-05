@@ -11,9 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * @author Fabio Zanela
+ *
+ */
 @Entity
 public class Empresa implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -24,6 +29,10 @@ public class Empresa implements Serializable{
 	private String nome;
 	private String cnpj;
 	
+	/**
+	 A anotação JoinTable é necessária quando é feita uma associação de muito para muito. Esta função
+	 é utilizada para criar uma nova tabela no banco de dados e realizará associação das duas tabelas
+	 */
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "EMPRESA_USUARIO",
@@ -31,6 +40,14 @@ public class Empresa implements Serializable{
 		inverseJoinColumns= @JoinColumn(name = "usuario_id")
 	)
 	private List<Usuario> usuarios = new ArrayList<>();
+	
+	
+	@OneToMany(mappedBy="empresa")
+	private List<Endereco> enderecos = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="empresa")
+	private List<Departamento> departamentos = new ArrayList<>();
 	
 	public Empresa() {
 		
@@ -73,6 +90,22 @@ public class Empresa implements Serializable{
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public List<Departamento> getDepartamentos() {
+		return departamentos;
+	}
+
+	public void setDepartamentos(List<Departamento> departamentos) {
+		this.departamentos = departamentos;
 	}
 
 	@Override

@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fabiozanela.patrimonio.domain.Usuario;
-import com.fabiozanela.patrimonio.services.UsuarioService;
+import com.fabiozanela.patrimonio.domain.Empresa;
+import com.fabiozanela.patrimonio.services.EmpresaService;
 
 @RestController
-@RequestMapping(value="/usuarios")
-public class UsuarioResources {
+@RequestMapping(value="/empresas")
+public class EmpresaResources {
 	
 	@Autowired
-	private UsuarioService service;
+	private EmpresaService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Usuario obj = service.buscar(id);
+		Empresa obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
