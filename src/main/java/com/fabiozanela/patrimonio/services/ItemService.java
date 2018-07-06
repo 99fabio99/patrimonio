@@ -13,7 +13,7 @@ public class ItemService {
 	@Autowired
 	private ItemRepository repo;
 	
-	public Item buscar(Integer id) {
+	public Item find(Integer id) {
 		Item obj = repo.findOne(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Item não encontrado! Id:" + id

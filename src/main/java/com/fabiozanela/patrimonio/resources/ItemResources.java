@@ -18,8 +18,8 @@ public class ItemResources {
 	private ItemService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Item obj = service.buscar(id);
+	public ResponseEntity<Item> find(@PathVariable Integer id) {
+		Item obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
