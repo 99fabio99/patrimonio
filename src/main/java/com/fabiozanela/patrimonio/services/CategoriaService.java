@@ -6,32 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.fabiozanela.patrimonio.domain.Empresa;
-import com.fabiozanela.patrimonio.repositories.EmpresaRepository;
+import com.fabiozanela.patrimonio.domain.Categoria;
+import com.fabiozanela.patrimonio.repositories.CategoriaRepository;
 import com.fabiozanela.patrimonio.services.exceptions.DataIntegrityException;
 import com.fabiozanela.patrimonio.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class EmpresaService {
+public class CategoriaService {
 	
 	@Autowired
-	private EmpresaRepository repo;
+	private CategoriaRepository repo;
 	
-	public Empresa find(Integer id) {
-		Empresa obj = repo.findOne(id);
+	public Categoria find(Integer id) {
+		Categoria obj = repo.findOne(id);
 		if(obj == null) {
-			throw new ObjectNotFoundException("Empresa não encontrada! Id:" + id
-					+ ", Tipo: " + Empresa.class.getName());
+			throw new ObjectNotFoundException("Categoria não encontrada! Id:" + id
+					+ ", Tipo: " + Categoria.class.getName());
 		}
 		return obj;
 	}
 	
-	public Empresa insert(Empresa obj) {
+	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 	
-	public Empresa update(Empresa obj) {
+	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
 	}
@@ -42,11 +42,11 @@ public class EmpresaService {
 		repo.delete(id);
 		}
 		catch(DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel excluir uma empresa que possui usuários e departamentos");
+			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui itens");
 		}
 	}
 	
-	public List<Empresa> findAll(){
+	public List<Categoria> findAll(){
 		return repo.findAll();
 	}
 }

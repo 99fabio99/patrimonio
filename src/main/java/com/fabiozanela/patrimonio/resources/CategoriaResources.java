@@ -12,29 +12,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.fabiozanela.patrimonio.domain.Empresa;
-import com.fabiozanela.patrimonio.services.EmpresaService;
+import com.fabiozanela.patrimonio.domain.Categoria;
+import com.fabiozanela.patrimonio.services.CategoriaService;
 
 @RestController
-@RequestMapping(value="/empresas")
-public class EmpresaResources {
+@RequestMapping(value="/categorias")
+public class CategoriaResources {
 	
 	@Autowired
-	private EmpresaService service;
+	private CategoriaService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Empresa> find(@PathVariable Integer id) {
-		Empresa obj = service.find(id);
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	/*
-	 Notação de @RequestBody é utilizada para converter o objeto json (obtido atraves da requisição)
-	 para um objeto java(neste caso foi objeto da classe empresa).
-	*/
-	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Empresa obj){
+	public ResponseEntity<Void> insert(@RequestBody Categoria obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 		.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -42,7 +37,7 @@ public class EmpresaResources {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Empresa obj, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
@@ -55,9 +50,8 @@ public class EmpresaResources {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Empresa>> findAll() {
-		List<Empresa> list = service.findAll();
+	public ResponseEntity<List<Categoria>> findAll() {
+		List<Categoria> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
 }
