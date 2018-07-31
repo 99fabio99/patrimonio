@@ -22,10 +22,10 @@ public class Sala implements Serializable{
 	private Integer id;
 	private String numero;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="salas")
 	private List<Departamento> departamentos = new ArrayList<>();
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="sala")
 	private List<Item> itens = new ArrayList<>();
 	

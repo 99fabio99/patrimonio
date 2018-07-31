@@ -2,6 +2,7 @@ package com.fabiozanela.patrimonio.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fabiozanela.patrimonio.domain.Departamento;
 import com.fabiozanela.patrimonio.domain.Empresa;
+import com.fabiozanela.patrimonio.dto.DepartamentoDTO;
 import com.fabiozanela.patrimonio.services.EmpresaService;
 
 @RestController
@@ -58,6 +61,13 @@ public class EmpresaResources {
 	public ResponseEntity<List<Empresa>> findAll() {
 		List<Empresa> list = service.findAll();
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value="/departamentos/{id}",method=RequestMethod.GET)
+	public ResponseEntity<List<DepartamentoDTO>> findDepartamentos(@PathVariable Integer id) {
+		List<Departamento> listDepartamento = service.find(id).getDepartamentos();
+		List<DepartamentoDTO> listDepatamentoDTO = listDepartamento.stream().map(obj -> new DepartamentoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDepatamentoDTO);
 	}
 	
 }

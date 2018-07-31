@@ -24,11 +24,12 @@ public class Departamento implements Serializable{
 	private Integer id;
 	private String nome;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="empresa_id")
 	private Empresa empresa;
 	
-	@JsonIgnore
+
 	@ManyToMany
 	@JoinTable(name = "DEPARTAMENTO_SALA",
 		joinColumns = @JoinColumn(name = "departamento_id"),

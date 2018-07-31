@@ -30,6 +30,7 @@ public class Item implements Serializable{
 	private long numeroSerie;
 	private Integer estadoEquipamento;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="sala_id")
 	private Sala sala;
